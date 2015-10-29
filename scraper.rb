@@ -11,16 +11,28 @@ url = "http://www.imdb.com/chart/top?ref_=ft_250"
 page = agent.get(url)
 
 # # Find somehing on the page using css selectors
-p page.at('.titleColumn').text.split(/\D/)[7]       #number
-p page.at('.titleColumn a').text.split(/"/)      #movie
-p page.at('.titleColumn a').attr('href')            #link
-p page.at('.secondaryInfo').text.split(/[()]/)[1]   #year
 
-p page.search('.titleColumn').text.split(/\D/)[7]       #number
-p page.at('.titleColumn a').text.split(/[""]/)      #movie
-p page.at('.titleColumn a').attr('href')            #link
-p page.at('.secondaryInfo').text.split(/[()]/)[1]   #year
+# p page.at('.lister-list').text
+# p page.at('.titleColumn').text.split(/\D/)[7]       #number
+# p page.at('.titleColumn a').text.split(/"/)      #movie
+# p page.at('.titleColumn a').attr('href')            #link
+# # p page.at('.secondaryInfo').text.split(/[()]/)[1]   #year
+# p page.at('.lister-list').at('.titleColumn').text.split(/\D/)[7]
 
+
+page.at('.lister-list').search('tr').each do |tr|
+
+  movie = {
+    rank: page.at('.titleColumn').text.split(/\D/)[7],
+    movie: page.at('.titleColumn a').text.split(/"/),
+    link: page.at('.titleColumn a').attr('href'),
+    year: page.at('.secondaryInfo').text.split(/[()]/)[1]
+
+  }
+
+  p movie
+
+end
 #
 # # Write out to the sqlite database using scraperwiki library
 # ScraperWiki.save_sqlite(["name"], {"name" => "susan", "occupation" => "software developer"})

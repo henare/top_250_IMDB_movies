@@ -17,20 +17,22 @@ page = agent.get(url)
 # p page.at('.titleColumn a').text.split(/"/)      #movie
 # p page.at('.titleColumn a').attr('href')            #link
 # # p page.at('.secondaryInfo').text.split(/[()]/)[1]   #year
-# p page.at('.lister-list').at('.titleColumn').text.split(/\D/)[7]
+p page.at('.lister-list').at('.titleColumn').text.split(/\D/)[7]
 
 
 page.at('.lister-list').search('tr').each do |tr|
 
   movie = {
-    rank: page.at('.titleColumn').text.split(/\D/)[7],
-    movie: page.at('.titleColumn a').text.split(/"/),
-    link: page.at('.titleColumn a').attr('href'),
-    year: page.at('.secondaryInfo').text.split(/[()]/)[1]
+    rank: tr.at('.titleColumn').text.split(/\D/)[7],
+   movie: tr.at('.titleColumn a').text.split(/"/),
+   link: 'http://www.imdb.com/' + tr.at('.titleColumn a').attr('href'),
+   year: tr.at('.secondaryInfo').text.split(/[()]/)[1]
 
   }
 
   p movie
+
+   ScraperWiki.save_sqlite([:movie], movie)
 
 end
 #

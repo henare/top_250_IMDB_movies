@@ -23,10 +23,10 @@ page = agent.get(url)
 page.at('.lister-list').search('tr').each do |tr|
 
   movie = {
-    rank: [tr.at('.titleColumn').text.split(/\D/)[7]]*",",
+    rank: tr.at('.titleColumn').text.split(/\D/)[7],
     movie_name: [tr.at('.titleColumn a').text.split(/"/)]*",",
-    link: ['http://www.imdb.com' + tr.at('.titleColumn a').attr('href')]*",",
-    year: [tr.at('.secondaryInfo').text.split(/[()]/)[1]]*","
+    link: 'http://www.imdb.com' + tr.at('.titleColumn a').attr('href'),
+    year: tr.at('.secondaryInfo').text.split(/[()]/)[1]
   }
 
   p movie
